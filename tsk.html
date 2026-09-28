@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unplugged — FTC Team 19257</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #12151B;
+    --surface: #1A1E26;
+    --line: #2C313C;
+    --ink: #ECE9E1;
+    --ink-dim: #A9AEB8;
+    --copper: #D9A54A;
+    --copper-dim: #8A6C34;
+    --circuit: #3A4150;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F1EFE9;
+      --surface: #E7E3D8;
+      --line: #CFC9B8;
+      --ink: #1B1D22;
+      --ink-dim: #5B5D63;
+      --copper: #A8702A;
+      --copper-dim: #C79A55;
+      --circuit: #CFC9B8;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F1EFE9;
+    --surface: #E7E3D8;
+    --line: #CFC9B8;
+    --ink: #1B1D22;
+    --ink-dim: #5B5D63;
+    --copper: #A8702A;
+    --copper-dim: #C79A55;
+    --circuit: #CFC9B8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .mono {
+    font-family: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  }
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Header ---------- */
+  header.top {
+    position: sticky;
+    top: 0;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .brandmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
+  .brandmark svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .top-tag {
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 88px 0 64px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(3.2rem, 9vw, 5.6rem);
+    line-height: 0.94;
+    margin: 0 0 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .hero p.lede {
+    font-size: 1.18rem;
+    line-height: 1.55;
+    color: var(--ink-dim);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-meta div {
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+  }
+  .hero-meta strong {
+    display: block;
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .hero-art {
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  section.no-rule { border-top: none; }
+  h2.section-title {
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 36px;
+    max-width: 20ch;
+  }
+
+  /* ---------- About ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.4fr;
+    gap: 56px;
+  }
+  .about-figure .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(3.4rem, 7vw, 4.6rem);
+    color: var(--copper);
+    line-height: 1;
+    font-weight: 500;
+  }
+  .about-figure .cap {
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+    margin-top: 10px;
+    max-width: 22ch;
+  }
+  .about-body p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    max-width: 62ch;
+  }
+  .about-body p + p { margin-top: 16px; }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Timeline ---------- */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+  }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+  }
+  .tl-row:first-child { border-top: none; }
+  .tl-year {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--copper);
+    font-size: 1rem;
+    padding-top: 2px;
+  }
+  .tl-body h3 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+  .tl-body p {
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    max-width: 58ch;
+  }
+
+  /* ---------- Roles ---------- */
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .role {
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+  .role:nth-child(odd) { padding-right: 32px; }
+  .role:nth-child(even) { padding-left: 32px; border-left: 1px solid var(--line); }
+  .role:nth-child(-n+2) { border-top: none; }
+  .role .role-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--copper-dim);
+    letter-spacing: 0.03em;
+  }
+  .role h3 {
+    margin: 8px 0 10px;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .role p {
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- Join ---------- */
+  .join {
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .join h2 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  .join p {
+    color: var(--ink-dim);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 50ch;
+  }
+  .join-facts {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .join-facts div { font-size: 0.85rem; color: var(--ink-dim); }
+  .join-facts strong { display: block; color: var(--ink); font-size: 1rem; font-weight: 600; margin-top: 2px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+  }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+  }
+  .foot-row .mono { color: var(--copper-dim); }
+
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-art { max-width: 220px; opacity: 0.6; }
+    .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .roles { grid-template-columns: 1fr; }
+    .role:nth-child(even) { padding-left: 0; border-left: none; }
+    .role:nth-child(n) { border-top: 1px solid var(--line); }
+    .role:first-child { border-top: none; }
+    .join { grid-template-columns: 1fr; padding: 32px 24px; }
+    .join-facts { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 20px; }
+    .tl-row { grid-template-columns: 64px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brandmark">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10.5" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M9 8V11.5C9 13.4 10.6 15 12.5 15H15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="9" cy="8" r="1.4" fill="currentColor"/>
+        <circle cx="15" cy="15" r="1.4" fill="currentColor"/>
+      </svg>
+      Unplugged
+    </div>
+    <div class="top-tag mono">TEAM 19257 · TIMIȘOARA</div>
+  </div>
+</header>
+
+<section class="hero no-rule">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>Unplugged</h1>
+        <p class="lede">The FIRST&nbsp;Tech&nbsp;Challenge robotics team of Liceul Teoretic "Nikolaus Lenau," Timișoara — designing, building, and programming a competition robot from scratch every season.</p>
+        <div class="hero-meta">
+          <div>Founded<strong>2020</strong></div>
+          <div>Program<strong>FIRST Tech Challenge</strong></div>
+          <div>Region<strong>West Romania</strong></div>
+        </div>
+      </div>
+      <svg class="hero-art" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 60H120V140H260V220H160V280" stroke="#3A4150" stroke-width="2"/>
+        <path d="M300 40V110H210V180" stroke="#3A4150" stroke-width="2"/>
+        <path d="M40 260H130V190" stroke="#3A4150" stroke-width="2"/>
+        <circle cx="20" cy="60" r="5" fill="#D9A54A"/>
+        <circle cx="120" cy="140" r="5" fill="#3A4150"/>
+        <circle cx="260" cy="220" r="5" fill="#3A4150"/>
+        <circle cx="160" cy="280" r="5" fill="#D9A54A"/>
+        <circle cx="300" cy="40" r="5" fill="#3A4150"/>
+        <circle cx="210" cy="180" r="5" fill="#D9A54A"/>
+        <circle cx="40" cy="260" r="5" fill="#3A4150"/>
+        <rect x="150" y="120" width="28" height="28" rx="2" stroke="#D9A54A" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap about-grid">
+    <div class="about-figure">
+      <div class="num">2020</div>
+      <div class="cap">Rookie season, built entirely by students at Lenau</div>
+    </div>
+    <div class="about-body">
+      <p>Unplugged is one of two FIRST&nbsp;Tech&nbsp;Challenge teams representing Timișoara's German-language high school, <strong>Liceul Teoretic "Nikolaus Lenau."</strong> Each season we take on a new international game, then spend the year designing, machining, wiring, and coding a robot to compete in it — alongside writing the engineering notebook that documents every decision along the way.</p>
+      <p>We compete in the <strong>West Region</strong> of FTC Romania, sharing league meets and scrimmages with teams from across Timișoara, and we take part in outreach work that brings robotics and STEM to younger students across the county.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Where we've been</h2>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-year mono">2020</div>
+        <div class="tl-body">
+          <h3>Team founded</h3>
+          <p>Unplugged is established at Lenau and registered as Team #19257 in FIRST Tech Challenge Romania.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-year mono">2024</div>
+        <div class="tl-body">
+          <h3>National stage</h3>
+          <p>The team qualifies for the national stage of the BRD FIRST Tech Challenge Championship.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-year mono">2025</div>
+        <div class="tl-body">
+          <h3>County-wide outreach</h3>
+          <p>Members mentor younger students as part of "STEAM la puterea inEDU," a program that reached over 3,400 children across Timiș county.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-year mono">Now</div>
+        <div class="tl-body">
+          <h3>Season in progress</h3>
+          <p>Regular league meets against Timișoara teams including RoboDojo, CyberMoon, and AtlasCNB, building toward this year's regional qualifier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">How the team is organized</h2>
+    <div class="roles">
+      <div class="role">
+        <div class="role-tag mono">BUILD</div>
+        <h3>Mechanical & Design</h3>
+        <p>CAD, fabrication, and iteration on the physical robot — from first prototype to competition-ready chassis.</p>
+      </div>
+      <div class="role">
+        <div class="role-tag mono">CODE</div>
+        <h3>Programming</h3>
+        <p>Writing the control and autonomous software that turns a wired-up robot into one that scores points.</p>
+      </div>
+      <div class="role">
+        <div class="role-tag mono">DOCS</div>
+        <h3>Strategy & Notebook</h3>
+        <p>Match strategy, scouting, and the engineering notebook that records the reasoning behind the robot.</p>
+      </div>
+      <div class="role">
+        <div class="role-tag mono">OUTREACH</div>
+        <h3>Community</h3>
+        <p>Workshops and mentoring that bring robotics to younger students in Timișoara and Timiș county.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="join">
+      <div>
+        <h2>Joining Unplugged</h2>
+        <p>New members join at the start of each school year. No prior robotics experience is required — just curiosity, and a willingness to learn CAD, code, or how to write up a build clearly, whichever side of the team fits you best.</p>
+      </div>
+      <div class="join-facts">
+        <div>School<strong>Liceul Teoretic "Nikolaus Lenau"</strong></div>
+        <div>City<strong>Timișoara, Romania</strong></div>
+        <div>Team number<strong>19257</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>Unplugged · Liceul Teoretic "Nikolaus Lenau," Timișoara</div>
+    <div class="mono">FTC #19257 · WEST REGION · ROMANIA</div>
+  </div>
+</footer>
+
+</body>
+</html>
